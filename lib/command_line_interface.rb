@@ -119,7 +119,16 @@ class CommandLineInterface
   end
 
   def delete_account
-    User.destroy(@person.id)
+    puts "Are you sure you want to delete your account? Yes/No"
+    answer = gets.chomp
+    if answer == "Yes"
+      User.destroy(@person.id)
+      puts "Okay, bye! You're deleted."
+      exit
+    else
+      puts "That's good."
+      menu
+    end
   end
 
 
