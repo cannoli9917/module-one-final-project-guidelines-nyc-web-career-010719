@@ -1,18 +1,13 @@
 class CommandLineInterface
 
-  @@person = nil
-
   def greet
     puts "Hello, what is your name?"
     answer = gets.chomp
     puts "Nice to have you #{answer}"
-    @@person = find_or_create_by_name(answer)
-    @@person
+    @person = find_or_create_by_name(answer)
+    @person
   end
 
-  # def create_user(name)
-  #   User.create(name: name)
-  # end
 
   def find_or_create_by_name(name)
     User.find_or_create_by(name: name)
@@ -43,9 +38,9 @@ class CommandLineInterface
 
 
   def lunch_suggestion
-      binding.pry
-      Lunch.create(food_suggestion_id: food_suggestion_id, user_id: something)
-
+      Lunch.create(food_suggestion_id: food_suggestion_id, user_id: @person.id)
+# display lunch
+# ask if you want to add to favorites
       puts "#{}"
   end
 
