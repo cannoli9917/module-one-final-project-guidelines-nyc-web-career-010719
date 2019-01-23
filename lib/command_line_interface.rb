@@ -1,10 +1,13 @@
 class CommandLineInterface
 
+  @@person = nil
+
   def greet
     puts "Hello, what is your name?"
     answer = gets.chomp
     puts "Nice to have you #{answer}"
-    find_or_create_by_name(answer)
+    @@person = find_or_create_by_name(answer)
+    @@person
   end
 
   # def create_user(name)
@@ -16,22 +19,34 @@ class CommandLineInterface
   end
 
 
-  def lunch_suggestion
-    puts "Would you like a lunch suggestion? Yes/No?"
+  def menu
+    puts "
+    What would you like to do?
+      --A--  Give me a lunch suggestion
+      --B--  See my lunch favorites
+      --C--  View my lunch history
+      --D--  Go to My Settings
+    "
     answer = gets.chomp
-
-    if answer == "Yes"
-      # create new lunch instance
-      Lunch.create(food_suggestion_id: food_suggestion_id, user_id: )
-      #how to decide which food suggestion to put into a new lunch instance
-      lunch = Lunch.new()
-      puts "#{}"
-    elsif answer == "No"
-      puts "Ok have a good day."
-    else
-      puts "Enter a valid input."
+    if answer == "A"
       lunch_suggestion
+    elsif answer == "B"
+      view_lunch_favorites
+    elsif answer == "C"
+      view_lunch_history
+    elsif answer == "D"
+      settings_menu
+    else puts "Please select from the following list"
+      menu
     end
+  end
+
+
+  def lunch_suggestion
+      binding.pry
+      Lunch.create(food_suggestion_id: food_suggestion_id, user_id: something)
+
+      puts "#{}"
   end
 
 
@@ -59,5 +74,15 @@ class CommandLineInterface
   end
 
   # OUr user wants to know where to go to lunch today based on the weather
+
+  def view_lunch_favorites
+  end
+
+  def view_lunch_history
+  end
+
+  def settings_menu
+  end
+
 
 end
