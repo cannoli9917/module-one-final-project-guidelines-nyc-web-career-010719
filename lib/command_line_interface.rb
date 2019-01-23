@@ -20,7 +20,7 @@ class CommandLineInterface
       --A--  Give me a lunch suggestion
       --B--  See my lunch favorites
       --C--  View my lunch history
-      --D--  Go to My Settings
+      --D--  Delete my account
     "
     answer = gets.chomp
     if answer == "A"
@@ -30,7 +30,7 @@ class CommandLineInterface
     elsif answer == "C"
       view_lunch_history
     elsif answer == "D"
-      settings_menu
+      delete_account
     else puts "Please select from the following list"
       menu
     end
@@ -118,9 +118,8 @@ class CommandLineInterface
     end
   end
 
-  def settings_menu
-
-    
+  def delete_account
+    User.destroy(@person.id)
   end
 
 
