@@ -38,11 +38,35 @@ class CommandLineInterface
 
 
   def lunch_suggestion
-      Lunch.create(food_suggestion_id: food_suggestion_id, user_id: @person.id)
+      lunch = Lunch.create(food_suggestion_id: food_suggestion_id, user_id: @person.id)
 # display lunch
 # ask if you want to add to favorites
-      puts "#{}"
+      # id = lunch.food_suggestion_id
+      # when food_suggestion_id == FoodSuggestion.id
+
+      fs = FoodSuggestion.where(id: lunch.food_suggestion_id)
+      place = fs.pluck(:suggestion)
+      distance = fs.pluck(:distance)
+
+
+
+    # binding.pry
+      puts "It's #{current_temperature} degrees F. #{place[0]} is a great place #{distance[0]}."
+      puts "Would you like to add #{place[0]} to your favorites list? Yes/No"
+      answer = gets.chomp
+      if answer == "Yes"
+        add_favorite(lunch)
+        puts "#{place[0]} was added to your favorites."
+      else
+        puts "Okay, sounds good! #{place[0]} was not added to your favorites."
+      end
   end
+
+  def add_favorite(lunch)
+    lunch.update(is_favorite: 1)
+  end
+
+
 
 
   def current_temperature
@@ -71,12 +95,32 @@ class CommandLineInterface
   # OUr user wants to know where to go to lunch today based on the weather
 
   def view_lunch_favorites
+    favorites = Lunch.where(user_id: @person.id, is_favorite: 1)
+
+    fs_ids = favorites.pluck(:food_suggestion_id).uniq
+    favs = FoodSuggestion.where(id: fs_ids)
+    places = favs.pluck(:suggestion)
+    puts "Here are your favorite places:"
+    places.each do |place|
+      puts place
+    end
   end
 
   def view_lunch_history
+    history = Lunch.where(user_id: @person.id)
+
+    fs_ids = history.pluck(:food_suggestion_id)
+    places = FoodSuggestion.where(id: fs_ids)
+    my_places = places.pluck(:suggestion)
+    puts "Here is your lunch history:"
+    my_places.each do |place|
+      puts place
+    end
   end
 
   def settings_menu
+
+    
   end
 
 
