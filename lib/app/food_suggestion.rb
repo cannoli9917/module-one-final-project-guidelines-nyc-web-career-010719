@@ -5,18 +5,26 @@ class FoodSuggestion < ActiveRecord::Base
 
 
   # be able to take in a user instance
-  # be able to take in weather information from user location and API data
+
   # be able to return lunch suggestions based on location and weather
   #
-#
-#   response_string = RestClient.get('http://www.swapi.co/api/people/')
-# response_hash = JSON.parse(response_string)
 
-def whatever
-  weather_string = RestClient.get("https://api.darksky.net/forecast/")
 
-  weather_hash = JSON.parse(weather_string)
-  binding.pry
-end
+  ## be able to take in weather information from flatiron school location and API data
+  def current_temperature
+    weather_string = RestClient.get("https://api.darksky.net/forecast/#{ENV['API_KEY']}/40.705311,-74.014053")
+
+    weather_hash = JSON.parse(weather_string)
+
+    weather_hash["currently"]["temperature"]
+
+  end
+
+
+  #take the weather_hash and return boolean is_precipitating?
+  #if currently icon == "rain"
+
+  # determines lunch place based on temperature
+  # but if it's raining
 
 end
