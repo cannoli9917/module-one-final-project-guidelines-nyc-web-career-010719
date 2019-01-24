@@ -1,0 +1,8 @@
+FoodSuggestion.new(suggestion: "Plaza Deli", distance: "in the building")
+FoodSuggestion.new(suggestion: "Cafe 11", distance: "in the building")
+FoodSuggestion.new(suggestion: "Pret a Manger", distance: "nearby")
+FoodSuggestion.new(suggestion: "Subway", distance: "nearby")
+FoodSuggestion.new(suggestion: "Burger King", distance: "nearby")
+FoodSuggestion.new(suggestion: "Cafe Exchange", distance: "nearby")
+FoodSuggestion.new(suggestion: "Naya Express", distance: "in the neighborhood")
+FoodSuggestion.new(suggestion: "Dig Inn", distance: "in the neighborhood")
