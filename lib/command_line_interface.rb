@@ -1,9 +1,16 @@
 class CommandLineInterface
 
   def greet
-    puts "Hello, what is your name?"
+    puts "
+
+                              Hello, what is your name?
+
+                                                                      "
     answer = gets.chomp
-    puts "Nice to have you #{answer}"
+    puts "
+
+                              Nice to have you #{answer}
+                                                                      "
     @person = find_or_create_by_name(answer)
     @person
   end
@@ -16,12 +23,12 @@ class CommandLineInterface
 
   def menu
     puts "
-    What would you like to do?
-      --A--  Give me a lunch suggestion
-      --B--  See my lunch favorites
-      --C--  View my lunch history
-      --D--  Delete my account
-      --E--  Exit 
+                          What would you like to do?
+                            --A--  Give me a lunch suggestion
+                            --B--  See my lunch favorites
+                            --C--  View my lunch history
+                            --D--  Delete my account
+                            --E--  Exit
     "
     answer = gets.chomp
     if answer == "A"
@@ -34,7 +41,10 @@ class CommandLineInterface
       delete_account
     elsif answer == "E"
       exit
-    else puts "Please select from the following list"
+    else puts "
+
+                        Please select from the following list
+                                                                    "
       menu
     end
   end
@@ -46,14 +56,36 @@ class CommandLineInterface
       place = lunch.food_suggestion.suggestion
       distance = lunch.food_suggestion.distance
 
-      puts "It's #{current_temperature} degrees F. #{place} is a great place #{distance}."
-      puts "Would you like to add #{place} to your favorites list? Yes/No"
+      puts "
+          It's #{current_temperature} degrees F. #{place} is a great place #{distance}.
+                                                                                  "
+
+
+      favorite_lunches = @person.lunches.where(is_favorite: 1)
+      places = favorite_lunches.map do |lunch|
+        lunch.food_suggestion.suggestion
+      end.uniq
+
+      if places.include?(place)
+
+        puts "
+                  #{place} is one of your favorite places.  Enjoy your lunch!
+                                                                                  "
+          menu
+      else puts "
+                Would you like to add #{place} to your favorites list? Yes/No
+                                                                                  "
+      end
       answer = gets.chomp
       if answer == "Yes"
         add_favorite(lunch)
-        puts "#{place} was added to your favorites."
+        puts "
+                      #{place} was added to your favorites.
+                                                                                  "
       else
-        puts "Okay, sounds good! #{place} was not added to your favorites."
+        puts "
+                Okay, sounds good! #{place} was not added to your favorites.
+                                                                                  "
       end
       menu
   end
@@ -93,9 +125,49 @@ class CommandLineInterface
       lunch.food_suggestion.suggestion
     end.uniq
 
-    puts "Here are your favorite places:"
+    puts "
+                            Here are your favorite places:
+                                                                      "
     places.each do |place|
       puts place
+    end
+
+    remove_favorite?
+
+  end
+
+
+  def remove_favorite?
+    favorite_lunches = @person.lunches.where(is_favorite: 1)
+    places = favorite_lunches.map do |lunch|
+      lunch.food_suggestion.suggestion
+    end.uniq
+    puts "
+    Would you like to remove any of these places from your favorites?
+    Yes/No
+    "
+    answer = gets.chomp
+    if answer == "Yes"
+      puts  "
+      Which favorite would you like to remove?
+      "
+      answer = gets.chomp
+      if places.include?(answer)
+
+        lunch_obj = favorite_lunches.select do |lunch|
+          lunch.food_suggestion.suggestion == answer
+        end
+
+        lunch_obj.each do |lunch|
+          lunch.update(is_favorite: 0)
+        end
+        view_lunch_favorites
+      else
+        puts "Please enter a favorite restaurant you would like to remove."
+        remove_favorite?
+      end
+    else 
+      menu
     end
   end
 
@@ -104,21 +176,29 @@ class CommandLineInterface
       "#{lunch.date} - #{lunch.food_suggestion.suggestion}"
     end
 
-    puts "Here is your lunch history:"
+    puts "
+                            Here is your lunch history:
+                                                                    "
     historys.each do |place|
       puts place
     end
   end
 
   def delete_account
-    puts "Are you sure you want to delete your account? Yes/No"
+    puts "
+              Are you sure you want to delete your account? Yes/No
+                                                                    "
     answer = gets.chomp
     if answer == "Yes"
       User.destroy(@person.id)
-      puts "Okay, bye! You're deleted."
+      puts "
+                            Okay, bye! You're deleted.
+                                                                    "
       exit
     else
-      puts "That's good."
+      puts "
+                                  That's good.
+                                                                    "
       menu
     end
   end
