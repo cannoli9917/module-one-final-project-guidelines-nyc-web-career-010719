@@ -166,7 +166,7 @@ class CommandLineInterface
         puts "Please enter a favorite restaurant you would like to remove."
         remove_favorite?
       end
-    else 
+    else
       menu
     end
   end
@@ -182,6 +182,8 @@ class CommandLineInterface
     historys.each do |place|
       puts place
     end
+
+    menu
   end
 
   def delete_account
