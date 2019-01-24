@@ -1,3 +1,5 @@
+
+
 FoodSuggestion.create(suggestion: "Plaza Deli", distance: "in the building")
 FoodSuggestion.create(suggestion: "Cafe 11", distance: "in the building")
 FoodSuggestion.create(suggestion: "Pret a Manger", distance: "nearby")
