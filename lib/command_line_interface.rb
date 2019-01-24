@@ -38,36 +38,25 @@ class CommandLineInterface
 
 
   def lunch_suggestion
-      lunch = Lunch.create(food_suggestion_id: food_suggestion_id, user_id: @person.id)
-# display lunch
-# ask if you want to add to favorites
-      # id = lunch.food_suggestion_id
-      # when food_suggestion_id == FoodSuggestion.id
+      lunch = Lunch.create(food_suggestion_id: food_suggestion_id, user_id: @person.id, date: Time.now.strftime("%B %d, %Y"))
 
-      fs = FoodSuggestion.where(id: lunch.food_suggestion_id)
-      place = fs.pluck(:suggestion)
-      distance = fs.pluck(:distance)
+      place = lunch.food_suggestion.suggestion
+      distance = lunch.food_suggestion.distance
 
-
-
-    # binding.pry
-      puts "It's #{current_temperature} degrees F. #{place[0]} is a great place #{distance[0]}."
-      puts "Would you like to add #{place[0]} to your favorites list? Yes/No"
+      puts "It's #{current_temperature} degrees F. #{place} is a great place #{distance}."
+      puts "Would you like to add #{place} to your favorites list? Yes/No"
       answer = gets.chomp
       if answer == "Yes"
         add_favorite(lunch)
-        puts "#{place[0]} was added to your favorites."
+        puts "#{place} was added to your favorites."
       else
-        puts "Okay, sounds good! #{place[0]} was not added to your favorites."
+        puts "Okay, sounds good! #{place} was not added to your favorites."
       end
   end
 
   def add_favorite(lunch)
     lunch.update(is_favorite: 1)
   end
-
-
-
 
   def current_temperature
     weather_string = RestClient.get("https://api.darksky.net/forecast/#{ENV['API_KEY']}/40.705311,-74.014053")
@@ -108,12 +97,12 @@ class CommandLineInterface
 
   def view_lunch_history
     historys = @person.lunches.map do |lunch|
-      lunch.food_suggestion.suggestion
+      "#{lunch.date} - #{lunch.food_suggestion.suggestion}"
     end
 
     puts "Here is your lunch history:"
-    historys.each_with_index do |place, index|
-      puts "#{index + 1}. #{place}"
+    historys.each do |place|
+      puts place
     end
   end
 
