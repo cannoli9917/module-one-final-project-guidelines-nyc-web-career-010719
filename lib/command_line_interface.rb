@@ -107,14 +107,13 @@ class CommandLineInterface
   end
 
   def view_lunch_history
-    history = Lunch.where(user_id: @person.id)
+    historys = @person.lunches.map do |lunch|
+      lunch.food_suggestion.suggestion
+    end
 
-    fs_ids = history.pluck(:food_suggestion_id)
-    places = FoodSuggestion.where(id: fs_ids)
-    my_places = places.pluck(:suggestion)
     puts "Here is your lunch history:"
-    my_places.each do |place|
-      puts place
+    historys.each_with_index do |place, index|
+      puts "#{index + 1}. #{place}"
     end
   end
 
