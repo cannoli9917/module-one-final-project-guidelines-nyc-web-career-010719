@@ -1,6 +1,8 @@
 class CommandLineInterface
 
   def greet
+
+
     puts "
 
                               Hello, what is your name?
@@ -57,6 +59,7 @@ class CommandLineInterface
       distance = lunch.food_suggestion.distance
 
       puts "
+          Weather today : #{current_weather_summary}
           It's #{current_temperature} degrees F. #{place} is a great place #{distance}.
                                                                                   "
 
@@ -94,6 +97,7 @@ class CommandLineInterface
     lunch.update(is_favorite: 1)
   end
 
+
   def current_temperature
     weather_string = RestClient.get("https://api.darksky.net/forecast/#{ENV['API_KEY']}/40.705311,-74.014053")
 
@@ -102,10 +106,29 @@ class CommandLineInterface
     weather_hash["currently"]["temperature"]
   end
 
+
+  def current_precipitation_probability
+    weather_string = RestClient.get("https://api.darksky.net/forecast/#{ENV['API_KEY']}/40.705311,-74.014053")
+
+    weather_hash = JSON.parse(weather_string)
+
+    weather_hash["currently"]["precipProbability"]
+
+  end
+
+  def current_weather_summary
+    weather_string = RestClient.get("https://api.darksky.net/forecast/#{ENV['API_KEY']}/40.705311,-74.014053")
+
+    weather_hash = JSON.parse(weather_string)
+
+    weather_hash["currently"]["summary"]
+
+  end
+
   def food_suggestion_distance
-    if current_temperature < 30
+    if current_temperature < 30 || current_precipitation_probability > 0.7
       return "in the building"
-    elsif current_temperature > 50
+    elsif current_temperature > 50 || current_precipitation_probability < 0.5
       return "in the neighborhood"
     else
       return "nearby"
