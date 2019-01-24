@@ -21,6 +21,7 @@ class CommandLineInterface
       --B--  See my lunch favorites
       --C--  View my lunch history
       --D--  Delete my account
+      --E--  Exit 
     "
     answer = gets.chomp
     if answer == "A"
@@ -31,6 +32,8 @@ class CommandLineInterface
       view_lunch_history
     elsif answer == "D"
       delete_account
+    elsif answer == "E"
+      exit
     else puts "Please select from the following list"
       menu
     end
@@ -52,6 +55,7 @@ class CommandLineInterface
       else
         puts "Okay, sounds good! #{place} was not added to your favorites."
       end
+      menu
   end
 
   def add_favorite(lunch)
