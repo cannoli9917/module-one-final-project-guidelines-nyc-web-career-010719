@@ -95,11 +95,11 @@ class CommandLineInterface
   # OUr user wants to know where to go to lunch today based on the weather
 
   def view_lunch_favorites
-    favorites = Lunch.where(user_id: @person.id, is_favorite: 1)
+    favorite_lunches = @person.lunches.where(is_favorite: 1)
+    places = favorite_lunches.map do |lunch|
+      lunch.food_suggestion.suggestion
+    end.uniq
 
-    fs_ids = favorites.pluck(:food_suggestion_id).uniq
-    favs = FoodSuggestion.where(id: fs_ids)
-    places = favs.pluck(:suggestion)
     puts "Here are your favorite places:"
     places.each do |place|
       puts place
