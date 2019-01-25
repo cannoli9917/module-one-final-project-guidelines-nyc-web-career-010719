@@ -1,8 +1,16 @@
+FoodSuggestion.destroy_all
+
 FoodSuggestion.create(suggestion: "Plaza Deli", distance: "in the building")
 FoodSuggestion.create(suggestion: "Cafe 11", distance: "in the building")
 FoodSuggestion.create(suggestion: "Pret a Manger", distance: "nearby")
 FoodSuggestion.create(suggestion: "Subway", distance: "nearby")
 FoodSuggestion.create(suggestion: "Burger King", distance: "nearby")
 FoodSuggestion.create(suggestion: "Cafe Exchange", distance: "nearby")
+FoodSuggestion.create(suggestion: "GFG", distance: "nearby")
+FoodSuggestion.create(suggestion: "Bento Sushi", distance: "nearby")
+FoodSuggestion.create(suggestion: "Ramen Ramen", distance: "nearby")
 FoodSuggestion.create(suggestion: "Naya Express", distance: "in the neighborhood")
 FoodSuggestion.create(suggestion: "Dig Inn", distance: "in the neighborhood")
+FoodSuggestion.create(suggestion: "Chipotle", distance: "in the neighborhood")
+FoodSuggestion.create(suggestion: "Joe & the Juice", distance: "in the neighborhood")
+FoodSuggestion.create(suggestion: "Sophie's Cuban Cuisine", distance: "in the neighborhood")
