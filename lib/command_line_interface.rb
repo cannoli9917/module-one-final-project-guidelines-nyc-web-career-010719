@@ -33,15 +33,15 @@ class CommandLineInterface
                             --E--  Exit
     "
     answer = gets.chomp
-    if answer == "A"
+    if answer.upcase == "A"
       lunch_suggestion
-    elsif answer == "B"
+    elsif answer.upcase == "B"
       view_lunch_favorites
-    elsif answer == "C"
+    elsif answer.upcase == "C"
       view_lunch_history
-    elsif answer == "D"
+    elsif answer.upcase == "D"
       delete_account
-    elsif answer == "E"
+    elsif answer.upcase == "E"
       exit
     else puts "
 
@@ -80,7 +80,7 @@ class CommandLineInterface
                                                                                   "
       end
       answer = gets.chomp
-      if answer == "Yes"
+      if answer.downcase == "yes"
         add_favorite(lunch)
         puts "
                       #{place} was added to your favorites.
@@ -148,14 +148,21 @@ class CommandLineInterface
       lunch.food_suggestion.suggestion
     end.uniq
 
-    puts "
-                            Here are your favorite places:
-                                                                      "
-    places.each do |place|
-      puts place
-    end
+    if places.size > 0
+        puts "
+                                Here are your favorite places:
+                                                                          "
+        places.each do |place|
+          puts place
+        end
 
-    remove_favorite?
+        remove_favorite?
+    else
+      puts "
+                                You have no favorite places!
+                                                                            "
+      menu
+    end
 
   end
 
@@ -170,7 +177,7 @@ class CommandLineInterface
     Yes/No
     "
     answer = gets.chomp
-    if answer == "Yes"
+    if answer.downcase == "yes"
       puts  "
       Which favorite would you like to remove?
       "
@@ -199,14 +206,23 @@ class CommandLineInterface
       "#{lunch.date} - #{lunch.food_suggestion.suggestion}"
     end
 
-    puts "
-                            Here is your lunch history:
-                                                                    "
-    historys.each do |place|
-      puts place
-    end
+    if historys.size > 0
 
-    menu
+      puts "
+                              Here is your lunch history:
+                                                                      "
+      historys.each do |place|
+        puts place
+      end
+
+      menu
+
+    else
+      puts "
+                              You have no lunch history!
+                                                                          "
+      menu
+    end
   end
 
   def delete_account
@@ -214,7 +230,7 @@ class CommandLineInterface
               Are you sure you want to delete your account? Yes/No
                                                                     "
     answer = gets.chomp
-    if answer == "Yes"
+    if answer.downcase == "yes"
       User.destroy(@person.id)
       puts "
                             Okay, bye! You're deleted.
