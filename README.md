@@ -27,6 +27,8 @@ INSTRUCTIONS
 1) clone this repository to your local machine and go to the file in your terminal
 2) run bundle install
 3) run rake db:seed to populate your SQL database with the lunch places provided in seeds.rb
+4) setup an api key with darksky and add it via a new file named .env
+    formating : API_KEY = ((secret api key from daksky API))
 4) run ruby bin/run.rb
 5) follow along in your terminal to be given lunch suggestions and use other functionality
 6) enjoy your lunch!
