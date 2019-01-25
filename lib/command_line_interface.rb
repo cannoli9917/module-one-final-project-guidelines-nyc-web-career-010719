@@ -203,7 +203,9 @@ class CommandLineInterface
 
   def view_lunch_history
     historys = @person.lunches.map do |lunch|
-      "#{lunch.date} - #{lunch.food_suggestion.suggestion}"
+      if lunch.food_suggestion
+        "#{lunch.date} - #{lunch.food_suggestion.suggestion}"
+      end
     end
 
     if historys.size > 0
